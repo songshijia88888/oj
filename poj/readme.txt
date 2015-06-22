@@ -1,0 +1,1 @@
+This project's target is solving problems of POJ,http://poj.org/,PKU JudgeOnline.
