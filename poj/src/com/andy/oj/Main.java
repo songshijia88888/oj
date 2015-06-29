@@ -14,6 +14,11 @@ public class Main {
 	private static int column;
 	private static int row;
 	private static int[][] pic;
+	private static List<Integer> reslist = new LinkedList<Integer>();
+	private static List<String> list = new LinkedList<String>();
+	private static Map<Integer, Integer> jumpmap3 = new HashMap<Integer, Integer>();
+	private static Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+	private static Set<Integer> set = null;
 
 	public static int getEdges(int m, int n) {
 		int rs = m - 1 > 0 ? m - 1 : 0;
@@ -36,50 +41,35 @@ public class Main {
 		return max;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		List<String> list = new LinkedList<String>();
+
 		StringBuffer sb = new StringBuffer();
 		String s = null;
-		try {
-			s = br.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		s = br.readLine();
 		while (!"0".equals(s)) {
 			int column = Integer.parseInt(s);
 
 			list.clear();
-			try {
-				s = br.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			map.clear();
+			jumpmap3.clear();
+			s = br.readLine();
 			while (!"0 0".equals(s)) {
 				list.add(s);
-				try {
-					s = br.readLine();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				s = br.readLine();
 
 			}// 读完一幅图片的所有数据
 
 			int pixels = 0;
-			Map<Integer, Integer> jumpmap3 = new HashMap<Integer, Integer>();
+
 			for (int i = 0; i < list.size(); i++) {
 				int thispixel = Integer.parseInt(list.get(i).split(" ")[1]);
 				if (thispixel / column > 7) {
-					// System.out.println("thispixel:" + thispixel);
 					thispixel = 4 * column;
 					pixels = pixels + thispixel;
 					jumpmap3.put(pixels,
 							Integer.parseInt(list.get(i).split(" ")[1]) - 4
 									* column);
-					// System.out.println(jumpmap3);
 				} else {
 					pixels = pixels + thispixel;
 				}
@@ -87,7 +77,7 @@ public class Main {
 			}
 
 			int row = pixels / column;
-			int[][] pic = new int[row][column];
+			pic = new int[row][column];
 			int filledpixels = 0;
 			int pixels2 = 0;
 			int pixelsvalue = 0;
@@ -114,95 +104,67 @@ public class Main {
 				listindex++;
 			}// 将RLE编码的压缩数据还原为原始的数据矩阵
 
-			/*
-			 * for (int i = 0; i < row; i++) { for (int j = 0; j < column; j++)
-			 * { System.out.print(pic[i][j] + " "); } System.out.println("");
-			 * }// 输出原始数据矩阵
-			 */
 			Main.column = column;
 			Main.row = row;
-			Main.pic = pic;
+			reslist.clear();
 
-			int[][] res = new int[row][column];
 			for (int i = 0; i < row; i++) {
 				for (int j = 0; j < column; j++) {
-					res[i][j] = getEdges(i, j);
+					reslist.add(getEdges(i, j));
 				}
 			}
-			/*
-			 * for (int i = 0; i < row; i++) { for (int j = 0; j < column; j++)
-			 * { System.out.print(res[i][j] + " "); } System.out.println("");
-			 * }// 生成及输出edges矩阵
-			 */
 
 			filledpixels = 0;
 			sb.append(column + "\n");
-			Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
-			for (int i = 0; i < row; i++) {
-				for (int j = 0; j < column; j++) {
-					if (map.get(res[i][j]) == null) {
-						if (i == 0 && j == 0) {
-							map.put(res[i][j], 1);
-							filledpixels++;
-							if (jumpmap3.containsKey(filledpixels + 2 * column)) {
-								// System.out.println("filledpixels:" +
-								// filledpixels + ",res[i][j]:" + res[i][j] +
-								// ",map.get(res[i][j]):" + map.get(res[i][j]));
-								map.put(res[i][j],
-										map.get(res[i][j])
-												+ jumpmap3.get(filledpixels + 2
-														* column));
-							}
-
-						} else {
-							Set<Integer> set = map.keySet();
-							int key = set.iterator().next();
-							int len = map.get(key);
-							sb.append(key + " " + len + "\n");
-							map.clear();
-							map.put(res[i][j], 1);
-							filledpixels++;
-							if (jumpmap3.containsKey(filledpixels + 2 * column)) {
-								// System.out.println("filledpixels:" +
-								// filledpixels + ",res[i][j]:" + res[i][j] +
-								// ",map.get(res[i][j]):" + map.get(res[i][j]));
-								map.put(res[i][j],
-										map.get(res[i][j])
-												+ jumpmap3.get(filledpixels + 2
-														* column));
-							}
-						}
-					} else {
-						map.put(res[i][j], 1 + map.get(res[i][j]));
+			while (filledpixels < row * column) {
+				int edge = reslist.get(filledpixels);
+				if (map.get(edge) == null) {
+					if (filledpixels == 0) {
+						map.put(edge, 1);
 						filledpixels++;
 						if (jumpmap3.containsKey(filledpixels + 2 * column)) {
-							// System.out.println("filledpixels:" + filledpixels
-							// + ",res[i][j]:" + res[i][j] +
-							// ",map.get(res[i][j]):" + map.get(res[i][j]));
-							map.put(res[i][j],
-									map.get(res[i][j])
+							map.put(edge,
+									map.get(edge)
+											+ jumpmap3.get(filledpixels + 2
+													* column));
+						}
+					} else {
+						set = map.keySet();
+						int key = set.iterator().next();
+						int len = map.get(key);
+						sb.append(key + " " + len + "\n");
+						map.clear();
+						map.put(edge, 1);
+						filledpixels++;
+						if (jumpmap3.containsKey(filledpixels + 2 * column)) {
+							map.put(edge,
+									map.get(edge)
 											+ jumpmap3.get(filledpixels + 2
 													* column));
 						}
 					}
 
+				} else {
+					map.put(edge, 1 + map.get(edge));
+					filledpixels++;
+					if (jumpmap3.containsKey(filledpixels + 2 * column)) {
+						map.put(edge,
+								map.get(edge)
+										+ jumpmap3.get(filledpixels + 2
+												* column));
+					}
 				}
 			}
-			Set<Integer> set = map.keySet();
+
+			set = map.keySet();
 			int key = set.iterator().next();
 			int len = map.get(key);
 			sb.append(key + " " + len + "\n");
+
 			map.clear();
-			sb.append("0 0\n");
+			sb.append("0 0\n");// 压缩edges矩阵并输出
 
-			// 压缩edges矩阵并输出
-
-			try {
-				s = br.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			s = br.readLine();
 		}
 		sb.append("0\n");
 		System.out.println(sb.toString());
