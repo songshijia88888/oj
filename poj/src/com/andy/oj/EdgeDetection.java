@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Main {
+public class EdgeDetection {
 	private static int column;
 	private static int row;
 	private static int[][] pic;
@@ -22,9 +22,9 @@ public class Main {
 
 	public static int getEdges(int m, int n) {
 		int rs = m - 1 > 0 ? m - 1 : 0;
-		int re = m + 1 > Main.row - 1 ? Main.row - 1 : m + 1;
+		int re = m + 1 > EdgeDetection.row - 1 ? EdgeDetection.row - 1 : m + 1;
 		int cs = n - 1 > 0 ? n - 1 : 0;
-		int ce = n + 1 > Main.column - 1 ? Main.column - 1 : n + 1;
+		int ce = n + 1 > EdgeDetection.column - 1 ? EdgeDetection.column - 1 : n + 1;
 		int max = 0;
 
 		for (int i = rs; i <= re; i++) {
@@ -36,7 +36,7 @@ public class Main {
 					max = Math.abs(pic[m][n] - pic[i][j]);
 				}
 			}
-		}// 这两个循环的起始条件浪费了我近一个小时时间，faint!!!!
+		}// 这两个循环的起始条件浪费了我近一个小时时间，faint!!!!  
 
 		return max;
 	}
@@ -104,8 +104,8 @@ public class Main {
 				listindex++;
 			}// 将RLE编码的压缩数据还原为原始的数据矩阵
 
-			Main.column = column;
-			Main.row = row;
+			EdgeDetection.column = column;
+			EdgeDetection.row = row;
 			reslist.clear();
 
 			for (int i = 0; i < row; i++) {
