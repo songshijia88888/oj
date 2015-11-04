@@ -5,51 +5,40 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CopyOfPOJ_1020_AnniversaryCake2 {
+public class POJ_1020_AnniversaryCake2 {
 	public static void main(String[] args) throws IOException {
 		// 22 14 4 1 6 7 9 1 7 3 10 8 1 6 5 4
-
 		SquareCutter2 s = new SquareCutter2(22);
-		if (s.cutSquare(4)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(6)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(7)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(9)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(7)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(3)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(10)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(8)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(6)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(5)) {
-			s.showRectangle();
-		}
-		if (s.cutSquare(4)) {
-			s.showRectangle();
-		}
-		for (int i = 0; i < 3; i++) {
-			if (s.cutSquare(1)) {
-				s.showRectangle();
-			}
-		}
+		s.cutSquare(1);
 		s.showRectangle();
-
+		s.cutSquare(1);
+		s.showRectangle();
+		s.cutSquare(1);
+		s.showRectangle();
+		s.cutSquare(3);
+		s.showRectangle();
+		s.cutSquare(4);
+		s.showRectangle();
+		s.cutSquare(4);
+		s.showRectangle();
+		s.cutSquare(5);
+		s.showRectangle();
+		s.cutSquare(6);
+		s.showRectangle();
+		s.cutSquare(6);
+		s.showRectangle();
+		s.cutSquare(7);
+		s.showRectangle();
+		s.cutSquare(7);
+		s.showRectangle();
+		s.cutSquare(8);
+		s.showRectangle();
+		s.cutSquare(9);
+		s.showRectangle();
+		s.cutSquare(10);
+		s.showRectangle();
+		s.showRectangle();
+		s.showRectangle();
 	}
 
 }
@@ -99,11 +88,11 @@ class SquareCutter2 {
 					rectangle.add(new Rectangle(max - n, min));
 				}
 				Collections.sort(rectangle);
-
+				System.out.println(n + "*" + n + ":cutted");
 				return true;
 			}
 		}
-
+		System.out.println(n + "*" + n + ":cannot be cutted");
 		return false;
 	}
 }
