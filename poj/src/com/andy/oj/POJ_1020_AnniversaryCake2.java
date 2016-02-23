@@ -7,38 +7,10 @@ import java.util.List;
 
 public class POJ_1020_AnniversaryCake2 {
 	public static void main(String[] args) throws IOException {
-		// 22 14 4 1 6 7 9 1 7 3 10 8 1 6 5 4
+		//22 14 : 4 1 6 7 9 1 7 3 10 8 1 6 5 4
+		//22 14 : 1 1 1 3 4 4 5 6 6 7 7 8 9 10
 		SquareCutter2 s = new SquareCutter2(22);
-		s.cutSquare(1);
-		s.showRectangle();
-		s.cutSquare(1);
-		s.showRectangle();
-		s.cutSquare(1);
-		s.showRectangle();
-		s.cutSquare(3);
-		s.showRectangle();
-		s.cutSquare(4);
-		s.showRectangle();
-		s.cutSquare(4);
-		s.showRectangle();
-		s.cutSquare(5);
-		s.showRectangle();
-		s.cutSquare(6);
-		s.showRectangle();
-		s.cutSquare(6);
-		s.showRectangle();
-		s.cutSquare(7);
-		s.showRectangle();
-		s.cutSquare(7);
-		s.showRectangle();
-		s.cutSquare(8);
-		s.showRectangle();
-		s.cutSquare(9);
-		s.showRectangle();
-		s.cutSquare(10);
-		s.showRectangle();
-		s.showRectangle();
-		s.showRectangle();
+			
 	}
 
 }
